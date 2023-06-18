@@ -45,8 +45,8 @@ while True:
         else:  # Si no se pudo leer un fotograma, el video ha terminado
             is_video_playing = False
 
-    # Salir del bucle si se presiona la tecla 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    # Salir del bucle si se presiona la tecla 'Esc'
+    if cv2.waitKey(1) == 27:
         break
 
 # Liberar los recursos

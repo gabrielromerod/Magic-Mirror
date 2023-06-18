@@ -1,19 +1,18 @@
 import cv2
-import time
 import mediapipe as mp
-
-# Inicializar el módulo de detección de manos de mediapipe
-mp_hands = mp.solutions.hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.5)  # type: ignore
+import time
 
 def detect_and_draw_hands(frame, is_palm_open, start_time):
     # Convertir el fotograma a BGR a RGB
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # Detectar las manos en el fotograma
+    mp_hands = mp.solutions.hands.Hands() # type: ignore
     results = mp_hands.process(frame_rgb)
 
     # Comprobar si se detectaron manos
     if results.multi_hand_landmarks:
+        open_palms = 0
         for hand_landmarks in results.multi_hand_landmarks:
             # Aquí es donde interpretamos los puntos de referencia para detectar la palma de la mano
             # Asumiendo que la palma de la mano está abierta si los demás dedos están doblados
@@ -25,21 +24,25 @@ def detect_and_draw_hands(frame, is_palm_open, start_time):
                     other_fingers_bent = False
                     break
 
-            # Si la palma de la mano es detectada y no se ha registrado como abierta al máximo, actualizar el tiempo de inicio
-            if other_fingers_bent and not is_palm_open:
-                if start_time == 0:
-                    start_time = time.time()
-                elif time.time() - start_time >= 2:
-                    is_palm_open = True
-            else:
-                start_time = 0
-                is_palm_open = False
+            # Si la palma de la mano es detectada, incrementar el contador de palmas abiertas
+            if other_fingers_bent:
+                open_palms += 1
 
             # Dibujar círculos en los puntos de referencia de la mano
             for landmark in hand_landmarks.landmark:
                 x = int(landmark.x * frame.shape[1])
                 y = int(landmark.y * frame.shape[0])
                 cv2.circle(frame, (x, y), 5, (0, 255, 0), -1)
+
+        # Si se detectaron dos palmas abiertas y no se ha registrado como abiertas al máximo, actualizar el tiempo de inicio
+        if open_palms == 2 and not is_palm_open:
+            if start_time == 0:
+                start_time = time.time()
+            elif time.time() - start_time >= 2:
+                is_palm_open = True
+        else:
+            start_time = 0
+            is_palm_open = False
 
     # Mostrar el fotograma con la detección de la mano
     cv2.imshow('Espejo Mágico', frame)

@@ -41,9 +41,10 @@ while True:
         ret, frame_video = video_cap.read()
         if ret:  # Si se pudo leer un fotograma
             frame_video = cv2.resize(frame_video, video_size)
-            display_frame('Espejo Mágico', frame_video)
+            display_frame('Espejo Mágico', frame_video)   
         else:  # Si no se pudo leer un fotograma, el video ha terminado
             is_video_playing = False
+            print("El video ha terminado")
 
     # Salir del bucle si se presiona la tecla 'Esc'
     if cv2.waitKey(1) == 27:

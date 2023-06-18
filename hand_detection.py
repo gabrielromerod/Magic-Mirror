@@ -2,12 +2,13 @@ import cv2
 import mediapipe as mp
 import time
 
+# Inicializar la detección de la mano
+mp_hands = mp.solutions.hands.Hands()  # type: ignore
 def detect_and_draw_hands(frame, is_palm_open, start_time):
     # Convertir el fotograma a BGR a RGB
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # Detectar las manos en el fotograma
-    mp_hands = mp.solutions.hands.Hands() # type: ignore
     results = mp_hands.process(frame_rgb)
 
     # Comprobar si se detectaron manos

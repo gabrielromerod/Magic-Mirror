@@ -10,6 +10,3 @@ def generar_poema(prompt = "Eres una IA poética. Genera un poema profundo y con
       max_tokens=100
     )
     return response["choices"][0]["text"].strip() # type: ignore
-
-if __name__ == "__main__":
-    print(generar_poema())

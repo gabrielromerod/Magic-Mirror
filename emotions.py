@@ -1,37 +1,15 @@
 import cv2
-from deepface import DeepFace
+import face_recognition
+from keras.models import load_model
+import numpy as np
 
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# Cargar el modelo de FER
+emotion_model_path = '_mini_XCEPTION.102-0.66.hdf5'
+emotion_classifier = load_model(emotion_model_path, compile=False)
+emotion_target_size = emotion_classifier.input_shape[1:3]
 
-cap = cv2.VideoCapture(0)
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-
-    for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
-        face = frame[y:y + h, x:x + w]
-        result = DeepFace.analyze(face, actions=['emotion'], enforce_detection=False)
-
-        if 'dominant_emotion' in result:
-            cv2.putText(frame, result['dominant_emotion'], (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-
-    cv2.imshow('Video', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
-
-import cv2
-from deepface import DeepFace
-
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# Las emociones que el clasificador puede predecir
+emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
 
 cap = cv2.VideoCapture(0)
 
@@ -41,15 +19,25 @@ while True:
         break
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
-        face = frame[y:y + h, x:x + w]
-        result = DeepFace.analyze(face, actions=['emotion'], enforce_detection=False)
+    faces = face_recognition.face_locations(rgb, model='hog')
 
-        if 'dominant_emotion' in result:
-            cv2.putText(frame, result['dominant_emotion'], (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    for top, right, bottom, left in faces:
+        cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 3)
+        
+        face = gray[top:bottom, left:right]
+        face = cv2.resize(face, (emotion_target_size))
+        face = face / 255.0  # normalizar
+        face = np.expand_dims(face, 0)  # expandir dimensiones para que se ajuste al formato de entrada del modelo
+        face = np.expand_dims(face, -1)  # expandir dimensiones para que se ajuste al formato de entrada del modelo
+
+        emotion_prediction = emotion_classifier.predict(face)[0]
+        emotion_probability = np.max(emotion_prediction)
+        emotion_label_arg = np.argmax(emotion_prediction)
+        emotion_text = emotion_labels[emotion_label_arg]
+
+        cv2.putText(frame, emotion_text, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
     cv2.imshow('Video', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

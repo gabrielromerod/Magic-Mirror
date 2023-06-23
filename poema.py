@@ -2,11 +2,17 @@ import openai
 
 openai.api_key = "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"
 
-def generar_poema(prompt = "Eres una IA poética. Genera un poema profundo y conmovedor que refleje la ironía de los humanos que, atrapados en el encanto de sus pantallas, olvidan vivir y disfrutar sus propias vidas. El poema debe ser de 30 palabras."):
+def generar_poema(emotion_percentages):
+    # Ordenamos las emociones de mayor a menor porcentaje
+    sorted_emotions = sorted(emotion_percentages.items(), key=lambda item: item[1], reverse=True)
+    
+    # Creamos el prompt a partir de las emociones
+    prompt = f"Eres una IA poética. Genera un poema que refleje las siguientes emociones: {sorted_emotions[0][0]}({sorted_emotions[0][1]}%), {sorted_emotions[1][0]}({sorted_emotions[1][1]}%), {sorted_emotions[2][0]}({sorted_emotions[2][1]}%). El poema debe ser de 35 palabras."
+    
     response = openai.Completion.create(
-      engine="text-davinci-003",
-      prompt=prompt,
-      temperature=0.5,
-      max_tokens=100
+        engine="text-davinci-003",
+        prompt=prompt,
+        temperature=0.5,
+        max_tokens=100
     )
-    return response["choices"][0]["text"].strip() # type: ignore
+    return response.choices[0].text.strip()

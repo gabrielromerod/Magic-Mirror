@@ -35,3 +35,4 @@ def detect_emotion(frame):
 
         cv2.putText(frame, emotion_text, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     return emotion_text, emotion_probability
+

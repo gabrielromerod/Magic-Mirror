@@ -39,9 +39,9 @@ def emotion_detection_thread(video_cap, emotion_queue):
             break
 
 # Inicializar el hilo de detección de emociones
-emotion_thread = threading.Thread(target=emotion_detection_thread, args=(cap, emotion_queue,))
+emotion_thread = threading.Thread(target=emotion_detection_thread, args=(video_cap, emotion_queue,))
 emotion_thread.start()
-    
+
 is_video_playing = False
 while True:
     # Leer el fotograma de la cámara
@@ -83,8 +83,6 @@ while True:
                 print("Porcentajes de emoción:", emotion_percentages)
                 print(generar_poema())
             # Limpiar el contador de emociones
-            else:
-                print("No se detectaron emociones")
             emotion_counter = {emotion: 0 for emotion in emotion_labels}
 
     # Salir del bucle si se presiona la tecla 'q'

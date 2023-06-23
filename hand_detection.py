@@ -2,14 +2,21 @@ import cv2
 import mediapipe as mp
 import time
 
-# Inicializar la detección de la mano
-mp_hands = mp.solutions.hands.Hands()  # type: ignore
+# Cargar el modelo de MediaPipe para la detección de manos
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.5, min_tracking_confidence=0.5)  # Cambio aquí
+
+# Función para detectar y dibujar las manos en un frame
 def detect_and_draw_hands(frame, is_palm_open, start_time):
+    if frame is None:
+        print("Empty frame received")
+        return is_palm_open, start_time
+
     # Convertir el fotograma a BGR a RGB
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # Detectar las manos en el fotograma
-    results = mp_hands.process(frame_rgb)
+    results = hands.process(frame_rgb)
 
     # Comprobar si se detectaron manos
     if results.multi_hand_landmarks:
@@ -17,11 +24,11 @@ def detect_and_draw_hands(frame, is_palm_open, start_time):
         for hand_landmarks in results.multi_hand_landmarks:
             # Aquí es donde interpretamos los puntos de referencia para detectar la palma de la mano
             # Asumiendo que la palma de la mano está abierta si los demás dedos están doblados
-            middle_finger_tip = hand_landmarks.landmark[mp.solutions.hands.HandLandmark.MIDDLE_FINGER_TIP] # type: ignore
+            middle_finger_tip = hand_landmarks.landmark[mp.solutions.hands.HandLandmark.MIDDLE_FINGER_TIP]  # type: ignore
             other_fingers_bent = True
             for id, lm in enumerate(hand_landmarks.landmark):
                 # Los dedos que no sean el dedo medio están doblados si sus y son mayores que el y del dedo medio
-                if id != mp.solutions.hands.HandLandmark.MIDDLE_FINGER_TIP and lm.y < middle_finger_tip.y: # type: ignore
+                if id != mp.solutions.hands.HandLandmark.MIDDLE_FINGER_TIP and lm.y < middle_finger_tip.y:  # type: ignore
                     other_fingers_bent = False
                     break
 
@@ -45,7 +52,4 @@ def detect_and_draw_hands(frame, is_palm_open, start_time):
             start_time = 0
             is_palm_open = False
 
-    # Mostrar el fotograma con la detección de la mano
-    cv2.imshow('Espejo Mágico', frame)
-    
     return is_palm_open, start_time

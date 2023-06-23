@@ -6,6 +6,7 @@ from hand_detection import detect_and_draw_hands
 from video_handling import load_video, display_frame
 from emotions import detect_emotion
 from poema import generar_poema
+from audio import leer_poema
 
 # Inicializar la cámara
 cap = cv2.VideoCapture(0)
@@ -91,7 +92,8 @@ while True:
             if total > 0:  # Para prevenir una división por cero
                 emotion_percentages = {emotion: count / total * 100 for emotion, count in emotion_counter.items()}
                 print("Porcentajes de emoción:", emotion_percentages)
-                print(generar_poema(emotion_percentages))
+                poema = generar_poema(emotion_percentages)
+                leer_poema(poema)
             # Limpiar el contador de emociones
             emotion_counter = {emotion: 0 for emotion in emotion_labels}
             is_palm_open = False  # Reiniciar el estado de la mano

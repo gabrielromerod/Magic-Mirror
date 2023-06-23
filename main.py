@@ -6,6 +6,7 @@ from hand_detection import detect_and_draw_hands
 from video_handling import load_video, display_frame
 from emotions import detect_emotion
 from poema import generar_poema
+import pygame
 from audio import leer_poema
 
 # Inicializar la cámara
@@ -60,6 +61,12 @@ while True:
         frame = cv2.flip(frame, 1)
 
         is_palm_open, start_time = detect_and_draw_hands(frame, is_palm_open, start_time)
+
+        # Reproducir el audio
+        pygame.mixer.init()
+        pygame.mixer.music.load("cancion.mp3")
+        pygame.mixer.music.play()
+
 
         # Mostrar el fotograma con la detección de la mano
         display_frame('Espejo Mágico', frame)

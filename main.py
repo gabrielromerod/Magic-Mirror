@@ -29,25 +29,32 @@ emotion_counter = {emotion: 0 for emotion in emotion_labels}
 # Crear una cola para los resultados de la detección de emociones
 emotion_queue = queue.Queue()
 
-def emotion_detection_thread(video_cap, emotion_queue):
+# Crear una cola para los fotogramas
+frame_queue = queue.Queue(maxsize=1)
+
+def frame_reading_thread(cap, frame_queue):
     while True:
-        ret, frame_video = video_cap.read()
+        ret, frame = cap.read()
         if ret:
-            emotion, probability = detect_emotion(frame_video)
-            emotion_queue.put((emotion, probability))
+            frame_queue.put(frame)
         else:
             break
 
-# Inicializar el hilo de detección de emociones
-emotion_thread = threading.Thread(target=emotion_detection_thread, args=(video_cap, emotion_queue,))
-emotion_thread.start()
+def emotion_detection_thread(frame_queue, emotion_queue):
+    while True:
+        frame = frame_queue.get()
+        emotion, probability = detect_emotion(frame)
+        emotion_queue.put((emotion, probability))
+
+# Inicializar el hilo de lectura de fotogramas
+frame_thread = threading.Thread(target=frame_reading_thread, args=(cap, frame_queue))
+frame_thread.start()
 
 is_video_playing = False
 while True:
-    if not is_video_playing:
-        # Leer el fotograma de la cámara
-        ret, frame = cap.read()
+    frame = frame_queue.get()
 
+    if not is_video_playing:
         # Voltear el fotograma horizontalmente para simular un espejo
         frame = cv2.flip(frame, 1)
 
@@ -60,6 +67,9 @@ while True:
         if is_palm_open and not is_video_playing:
             is_video_playing = True
             video_cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Comenzar el video desde el principio
+
+            emotion_thread = threading.Thread(target=emotion_detection_thread, args=(frame_queue, emotion_queue,))
+            emotion_thread.start()
     else:
         try:
             emotion, probability = emotion_queue.get_nowait()
@@ -84,6 +94,7 @@ while True:
                 print(generar_poema(emotion_percentages))
             # Limpiar el contador de emociones
             emotion_counter = {emotion: 0 for emotion in emotion_labels}
+            is_palm_open = False  # Reiniciar el estado de la mano
 
     # Salir del bucle si se presiona la tecla 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -92,4 +103,7 @@ while True:
 # Al final, liberar la cámara y cerrar todas las ventanas de OpenCV
 cap.release()
 cv2.destroyAllWindows()
-emotion_thread.join()  # Asegurarse de que el hilo de detección de emociones se ha cerrado correctamente
+frame_thread.join()  # Asegurarse de que el hilo de lectura de fotogramas se ha cerrado correctamente
+
+if is_video_playing:  # Si el hilo de detección de emociones se ha iniciado
+    emotion_thread.join()  # Asegurarse de que el hilo de detección de emociones se ha cerrado correctamente

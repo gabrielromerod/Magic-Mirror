@@ -5,6 +5,7 @@ import queue
 from hand_detection import detect_and_draw_hands
 from video_handling import load_video, display_frame
 from emotions import detect_emotion
+from exportador import export_results
 from poema import generar_poema
 import pygame
 from audio import leer_poema
@@ -14,6 +15,7 @@ cap = cv2.VideoCapture(0)
 
 # Cargar el video
 video_path = 'video.mp4'
+audio_path = 'cancion.mp3'
 video_cap, video_size = load_video(video_path)
 
 # Configurar la ventana de OpenCV
@@ -64,7 +66,7 @@ while True:
 
         # Reproducir el audio
         pygame.mixer.init()
-        pygame.mixer.music.load("cancion.mp3")
+        pygame.mixer.music.load(audio_path)
         pygame.mixer.music.play()
 
 
@@ -101,6 +103,7 @@ while True:
                 print("Porcentajes de emoción:", emotion_percentages)
                 poema = generar_poema(emotion_percentages)
                 leer_poema(poema)
+                export_results(video_path, emotion_percentages, poema, "cancion.mp3")
             # Limpiar el contador de emociones
             emotion_counter = {emotion: 0 for emotion in emotion_labels}
             is_palm_open = False  # Reiniciar el estado de la mano

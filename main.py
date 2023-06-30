@@ -9,14 +9,16 @@ from exportador import export_results
 from poema import generar_poema
 import pygame
 from audio import leer_poema
+import random
+import time
+
 
 # Inicializar la cámara
 cap = cv2.VideoCapture(0)
 
 # Cargar el video
-video_path = 'video.mp4'
-audio_path = 'cancion.mp3'
-video_cap, video_size = load_video(video_path)
+opciones = [1, 2, 3, 4, 5]
+random.seed(time.time())
 
 # Configurar la ventana de OpenCV
 cv2.namedWindow('Espejo Mágico', cv2.WINDOW_NORMAL)
@@ -55,62 +57,70 @@ frame_thread = threading.Thread(target=frame_reading_thread, args=(cap, frame_qu
 frame_thread.start()
 
 is_video_playing = False
-while True:
-    frame = frame_queue.get()
+while opciones:  # Mientras haya opciones disponibles
+    azar = random.choice(opciones)  # Seleccionar un video al azar
+    opciones.remove(azar)  # Eliminar el video seleccionado de las opciones
 
-    if not is_video_playing:
-        # Voltear el fotograma horizontalmente para simular un espejo
-        frame = cv2.flip(frame, 1)
+    video_path = f'videos/video{azar}.mp4'
+    audio_path = f'audios/audio{azar}.mp3'
+    video_cap, video_size = load_video(video_path)
 
-        is_palm_open, start_time = detect_and_draw_hands(frame, is_palm_open, start_time)
+    while True:
+        frame = frame_queue.get()
 
-        # Reproducir el audio
-        pygame.mixer.init()
-        pygame.mixer.music.load(audio_path)
-        pygame.mixer.music.play()
+        if not is_video_playing:
+            # Voltear el fotograma horizontalmente para simular un espejo
+            frame = cv2.flip(frame, 1)
 
+            is_palm_open, start_time = detect_and_draw_hands(frame, is_palm_open, start_time)
 
-        # Mostrar el fotograma con la detección de la mano
-        display_frame('Espejo Mágico', frame)
+            # Reproducir el audio
+            pygame.mixer.init()
+            pygame.mixer.music.load(audio_path)
+            pygame.mixer.music.play()
 
-        # Si la palma de la mano está abierta al máximo, comenzar a reproducir el video
-        if is_palm_open and not is_video_playing:
-            is_video_playing = True
-            video_cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Comenzar el video desde el principio
+            # Mostrar el fotograma con la detección de la mano
+            display_frame('Espejo Mágico', frame)
 
-            emotion_thread = threading.Thread(target=emotion_detection_thread, args=(frame_queue, emotion_queue,))
-            emotion_thread.start()
-    else:
-        try:
-            emotion, probability = emotion_queue.get_nowait()
-            if emotion is not None:
-                emotion_counter[emotion] += 1
-        except queue.Empty:
-            pass
+            # Si la palma de la mano está abierta al máximo, comenzar a reproducir el video
+            if is_palm_open and not is_video_playing:
+                is_video_playing = True
+                video_cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Comenzar el video desde el principio
 
-        # Leer y mostrar un fotograma del video
-        ret, frame_video = video_cap.read()
-        if ret:  # Si se pudo leer un fotograma
-            frame_video = cv2.resize(frame_video, video_size)
-            display_frame('Espejo Mágico', frame_video)
-            
-        else:  # Si no se pudo leer un fotograma, el video ha terminado
-            is_video_playing = False
-            print("El video ha terminado")
-            total = sum(emotion_counter.values())
-            if total > 0:  # Para prevenir una división por cero
-                emotion_percentages = {emotion: count / total * 100 for emotion, count in emotion_counter.items()}
-                print("Porcentajes de emoción:", emotion_percentages)
-                poema = generar_poema(emotion_percentages)
-                leer_poema(poema)
-                export_results(video_path, emotion_percentages, poema, "cancion.mp3")
-            # Limpiar el contador de emociones
-            emotion_counter = {emotion: 0 for emotion in emotion_labels}
-            is_palm_open = False  # Reiniciar el estado de la mano
+                emotion_thread = threading.Thread(target=emotion_detection_thread, args=(frame_queue, emotion_queue,))
+                emotion_thread.start()
 
-    # Salir del bucle si se presiona la tecla 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        else:
+            try:
+                emotion, probability = emotion_queue.get_nowait()
+                if emotion is not None:
+                    emotion_counter[emotion] += 1
+            except queue.Empty:
+                pass
+
+            # Leer y mostrar un fotograma del video
+            ret, frame_video = video_cap.read()
+            if ret:  # Si se pudo leer un fotograma
+                frame_video = cv2.resize(frame_video, video_size)
+                display_frame('Espejo Mágico', frame_video)
+            else:  # Si no se pudo leer un fotograma, el video ha terminado
+                is_video_playing = False
+                print("El video ha terminado")
+                total = sum(emotion_counter.values())
+                if total > 0:  # Para prevenir una división por cero
+                    emotion_percentages = {emotion: count / total * 100 for emotion, count in emotion_counter.items()}
+                    print("Porcentajes de emoción:", emotion_percentages)
+                    poema = generar_poema(emotion_percentages)
+                    leer_poema(poema)
+                    export_results(video_path, emotion_percentages, poema, audio_path)
+                # Limpiar el contador de emociones
+                emotion_counter = {emotion: 0 for emotion in emotion_labels}
+                is_palm_open = False  # Reiniciar el estado de la mano
+                break  # Salir del bucle y comenzar con un nuevo video
+                     
+        # Salir del bucle si se presiona la tecla 'q'
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
 # Al final, liberar la cámara y cerrar todas las ventanas de OpenCV
 cap.release()

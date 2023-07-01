@@ -128,4 +128,4 @@ cv2.destroyAllWindows()
 frame_thread.join()  # Asegurarse de que el hilo de lectura de fotogramas se ha cerrado correctamente
 
 if is_video_playing:  # Si el hilo de detección de emociones se ha iniciado
-    emotion_thread.join()  # Asegurarse de que el hilo de detección de emociones se ha cerrado correctamente
+    emotion_thread.join()  # type: ignore

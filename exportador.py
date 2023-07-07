@@ -7,18 +7,18 @@ def render_template():
         videos = json.load(json_file)
 
     # Load the Jinja2 environment and template
-    env = Environment(loader=FileSystemLoader(r'testingartweb'))
+    env = Environment(loader=FileSystemLoader(r'C:\Users\lords\Downloads\testingartweb'))
     template = env.get_template('template.html')
 
     # Render the template with the videos
     output = template.render(videos=videos)
 
     # Write the result to a new HTML file
-    with open(r'testingartweb\index.html', 'w', encoding="utf-8") as f:
+    with open(r'C:\Users\lords\Downloads\testingartweb\index.html', 'w', encoding="utf-8") as f:
         f.write(output)
 
     # Git add, commit, push
-    os.system('cd testingartweb')
+    os.system(r'cd C:\Users\lords\Downloads\testingartweb')
     os.system('git add .')
     os.system('git commit -m "Update"')
     os.system('git push')

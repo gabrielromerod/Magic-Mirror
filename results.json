@@ -54,5 +54,19 @@
         },
         "poema": "Neutralidad mezclada con tristeza,\nTemor en la brisa de la ma\u00f1ana,\nLa luz de la luna me inspira calma,\nMis pensamientos se vuelven sombr\u00edos.\nEl vac\u00edo me llama, el silencio es profundo,\nMis l\u00e1grimas descienden por mi rostro,\nMis miedos me atrapan en un abismo,\nMe siento perdida sin luz de esperanza.\nSin salida, me siento tan fr\u00e1gil,\nMi alma se desvanece en la noche,\nNo hay respuestas a mis preguntas,\nSolo una sensaci\u00f3n de soledad.",
         "audio_path": "https://espejomagico-708d7.web.app/audios/audio4.mp3"
+    },
+    {
+        "video_path": "https://espejomagico-708d7.web.app/videos/video5.mp4",
+        "emotion_percentages": {
+            "Angry": 0.0,
+            "Disgust": 0.0,
+            "Fear": 6.0606060606060606,
+            "Happy": 12.121212121212121,
+            "Sad": 3.0303030303030303,
+            "Surprise": 0.0,
+            "Neutral": 78.78787878787878
+        },
+        "poema": "Neutralidad me invade,\ncontenta me siento,\nmiedo me invade.\n\nSin pasi\u00f3n, sin tristeza,\nalegre me siento,\ntemerosa me siento.\n\nSin odio, sin amor,\ntranquil me siento,\nansiosa me siento.\n\nSin emoci\u00f3n, sin dolor,\nserena me siento,\ntemerosa me siento.",
+        "audio_path": "https://espejomagico-708d7.web.app/audios/audio5.mp3"
     }
 ]

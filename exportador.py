@@ -18,10 +18,7 @@ def render_template():
         f.write(output)
 
     # Git add, commit, push
-    os.system(r'cd C:\Users\lords\Downloads\testingartweb')
-    os.system('git add .')
-    os.system('git commit -m "Update"')
-    os.system('git push')
+    os.system('cd C:\\Users\\lords\\Downloads\\testingartweb && git add index.html && git commit -m "Update" && git push')
 
 
 def export_results(video_path, emotion_percentages, poema, audio_path):
@@ -39,5 +36,3 @@ def export_results(video_path, emotion_percentages, poema, audio_path):
     existing_data.append(data)
     with open('results.json', 'w', encoding='utf-8') as f:
         json.dump(existing_data, f, indent=4)
-
-render_template()

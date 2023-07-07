@@ -3,7 +3,7 @@ import mediapipe as mp
 import time
 
 # Cargar el modelo de MediaPipe para la detección de manos
-mp_hands = mp.solutions.hands
+mp_hands = mp.solutions.hands # type: ignore
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.5, min_tracking_confidence=0.5)  # Cambio aquí
 
 # Función para detectar y dibujar las manos en un frame

@@ -1,79 +1,58 @@
-{
-    "video_path": "videos/video2.mp4",
-    "emotion_percentages": {
-        "Angry": 0.0,
-        "Disgust": 0.0,
-        "Fear": 0.0,
-        "Happy": 2.5,
-        "Sad": 5.0,
-        "Surprise": 0.0,
-        "Neutral": 92.5
+[
+    {
+        "video_path": "https://espejomagico-708d7.web.app/videos/video4.mp4",
+        "emotion_percentages": {
+            "Angry": 0.0,
+            "Disgust": 0.0,
+            "Fear": 21.73913043478261,
+            "Happy": 26.08695652173913,
+            "Sad": 52.17391304347826,
+            "Surprise": 0.0,
+            "Neutral": 0.0
+        },
+        "poema": "Tristeza me consume, \npero la alegr\u00eda me alimenta. \nMiedo acecha mi coraz\u00f3n, \npero esperanza me gu\u00eda. \nL\u00e1grimas me desgastan, \npero la risa me empodera. \nLa sombra me inquieta, \npero la luz me encanta. \nLa tristeza me paraliza, \npero el amor me inspira.",
+        "audio_path": "https://espejomagico-708d7.web.app/audios/audio4.mp3"
     },
-    "poema": "En un mundo gris, mi coraz\u00f3n se siente neutral.\nA veces me pregunto si alguna vez estar\u00e9 feliz.\nOcasionalmente, la tristeza invade mi alma.\nPero la mayor\u00eda del tiempo, me siento sin emoci\u00f3n.\nNo hay alegr\u00eda, ni dolor, solo un vac\u00edo profundo.\nUn mundo donde no hay lugar para los sentimientos.",
-    "audio_path": "cancion.mp3"
-}{
-    "video_path": "videos/video4.mp4",
-    "emotion_percentages": {
-        "Angry": 0.0,
-        "Disgust": 0.0,
-        "Fear": 0.0,
-        "Happy": 0.0,
-        "Sad": 0.0,
-        "Surprise": 0.0,
-        "Neutral": 100.0
+    {
+        "video_path": "https://espejomagico-708d7.web.app/videos/video1.mp4",
+        "emotion_percentages": {
+            "Angry": 1.6666666666666667,
+            "Disgust": 1.6666666666666667,
+            "Fear": 63.33333333333333,
+            "Happy": 15.0,
+            "Sad": 13.333333333333334,
+            "Surprise": 3.3333333333333335,
+            "Neutral": 1.6666666666666667
+        },
+        "poema": "Miedo y tristeza me afligen,\nPero una sonrisa me alivia.\nTemor me consume, me ahoga,\nPero me sostiene la alegr\u00eda.\nMis l\u00e1grimas son una tormenta,\nPero mi coraz\u00f3n alberga esperanza.\nLa incertidumbre me asusta,\nPero me hace feliz la luz.",
+        "audio_path": "https://espejomagico-708d7.web.app/audios/audio1.mp3"
     },
-    "poema": "Neutralidad, una mirada serena,\nSin enojo ni asco,\nVac\u00edo de emociones,\nSin sentimientos profundos,\nNada me afecta,\nNi el bien ni el mal.\nUn estado de calma,\nSin preocupaci\u00f3n,\nUn camino tranquilo,\nSin ninguna prisa.\nUn momento de paz,\nSin ninguna ansiedad,\nVida sin drama,\nSin ninguna lucha.\nUn coraz\u00f3n sereno,\nSin ning\u00fan temor,\nSin apuros ni afanes,\nSolo una calma profunda.",
-    "audio_path": "cancion.mp3"
-}{
-    "video_path": "videos/video1.mp4",
-    "emotion_percentages": {
-        "Angry": 0.0,
-        "Disgust": 0.0,
-        "Fear": 0.0,
-        "Happy": 100.0,
-        "Sad": 0.0,
-        "Surprise": 0.0,
-        "Neutral": 0.0
+    {
+        "video_path": "https://espejomagico-708d7.web.app/videos/video4.mp4",
+        "emotion_percentages": {
+            "Angry": 0.0,
+            "Disgust": 0.0,
+            "Fear": 6.25,
+            "Happy": 0.0,
+            "Sad": 9.375,
+            "Surprise": 0.0,
+            "Neutral": 84.375
+        },
+        "poema": "En el silencio de la noche,\nmi tristeza me envuelve\ny el miedo me atenaza.\nNo hay alegr\u00edas ni risas\nni luz para iluminar.\nLa melancol\u00eda me abruma\ny el futuro me pesa.\nSin soluci\u00f3n ni consuelo,\ns\u00f3lo la neutralidad persiste.",
+        "audio_path": "https://espejomagico-708d7.web.app/audios/audio4.mp3"
     },
-    "poema": "Alegre y feliz,\nmi coraz\u00f3n se siente bien.\nCantando y bailando,\nel mundo es un lugar hermoso.\nBailando con los amigos\nen la luz de la luna.\nLos recuerdos son preciosos,\nel amor es eterno.\nRiendo y sonriendo,\nla vida es una aventura.\nAlegr\u00eda y felicidad,\nen mi coraz\u00f3n se encuentran.",
-    "audio_path": "audios/audio1.mp3"
-}{
-    "video_path": "videos/video5.mp4",
-    "emotion_percentages": {
-        "Angry": 0.0,
-        "Disgust": 0.0,
-        "Fear": 0.0,
-        "Happy": 0.0,
-        "Sad": 19.51219512195122,
-        "Surprise": 0.0,
-        "Neutral": 80.48780487804879
-    },
-    "poema": "Un sentimiento sin emoci\u00f3n,\nVac\u00edo y triste coraz\u00f3n.\nUn mundo gris y sin vida,\nSin fuego, sin alegr\u00eda.\nSin rabia, sin ilusi\u00f3n,\nNi una sola emoci\u00f3n.\nVac\u00edo, sin palabras,\nSin esperanza, sin amor.\nUn sentimiento de nada,\nUn lugar sin alma.",
-    "audio_path": "audios/audio5.mp3"
-}{
-    "video_path": "videos/video1.mp4",
-    "emotion_percentages": {
-        "Angry": 0.0,
-        "Disgust": 0.0,
-        "Fear": 9.433962264150944,
-        "Happy": 0.628930817610063,
-        "Sad": 51.57232704402516,
-        "Surprise": 0.0,
-        "Neutral": 38.36477987421384
-    },
-    "poema": "Tristeza me consume,\nme siento vac\u00edo.\nMiedo me invade,\nmis pensamientos se nublan.\nSombras me persiguen,\nsin esperanza de luz.\nTodo parece gris,\nsin alegr\u00edas ni fuego.\nLa soledad me acompa\u00f1a,\nsin ning\u00fan lugar al que huir.\nMis temores me acechan,\nmi alma se siente helada.\nSin una voz que me gu\u00ede,\nsin nada que me alivie.\nUn silencio ensordecedor,\nque me deja sin aliento.",
-    "audio_path": "audios/audio1.mp3"
-}{
-    "video_path": "videos/video3.mp4",
-    "emotion_percentages": {
-        "Angry": 0.0,
-        "Disgust": 0.0,
-        "Fear": 2.515723270440252,
-        "Happy": 6.918238993710692,
-        "Sad": 45.911949685534594,
-        "Surprise": 0.0,
-        "Neutral": 44.65408805031446
-    },
-    "poema": "Tristeza me invade,\nsin embargo, estoy neutro.\nAunque hay felicidad,\nno puedo dejar de llorar.\nLas l\u00e1grimas me inundan,\nel coraz\u00f3n se siente pesado.\nEsperanza y alegr\u00eda\nson como una luz lejana.\nAunque nunca desfallezca,\nla tristeza sigue ah\u00ed.\nUn equilibrio entre el dolor y la alegr\u00eda\nes lo que me ayudar\u00e1 a seguir.",
-    "audio_path": "audios/audio3.mp3"
-}
+    {
+        "video_path": "https://espejomagico-708d7.web.app/videos/video4.mp4",
+        "emotion_percentages": {
+            "Angry": 0.0,
+            "Disgust": 0.0,
+            "Fear": 6.0606060606060606,
+            "Happy": 0.0,
+            "Sad": 21.21212121212121,
+            "Surprise": 0.0,
+            "Neutral": 72.72727272727273
+        },
+        "poema": "Neutralidad mezclada con tristeza,\nTemor en la brisa de la ma\u00f1ana,\nLa luz de la luna me inspira calma,\nMis pensamientos se vuelven sombr\u00edos.\nEl vac\u00edo me llama, el silencio es profundo,\nMis l\u00e1grimas descienden por mi rostro,\nMis miedos me atrapan en un abismo,\nMe siento perdida sin luz de esperanza.\nSin salida, me siento tan fr\u00e1gil,\nMi alma se desvanece en la noche,\nNo hay respuestas a mis preguntas,\nSolo una sensaci\u00f3n de soledad.",
+        "audio_path": "https://espejomagico-708d7.web.app/audios/audio4.mp3"
+    }
+]

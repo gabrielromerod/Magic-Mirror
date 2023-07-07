@@ -5,7 +5,7 @@ import queue
 from hand_detection import detect_and_draw_hands
 from video_handling import load_video, display_frame
 from emotions import detect_emotion
-from exportador import export_results
+from exportador import export_results, render_template
 from poema import generar_poema
 import pygame
 from audio import leer_poema
@@ -109,10 +109,10 @@ while opciones:  # Mientras haya opciones disponibles
                 total = sum(emotion_counter.values())
                 if total > 0:  # Para prevenir una división por cero
                     emotion_percentages = {emotion: count / total * 100 for emotion, count in emotion_counter.items()}
-                    print("Porcentajes de emoción:", emotion_percentages)
                     poema = generar_poema(emotion_percentages)
                     leer_poema(poema)
                     export_results(video_path, emotion_percentages, poema, audio_path)
+                    render_template()
                 # Limpiar el contador de emociones
                 emotion_counter = {emotion: 0 for emotion in emotion_labels}
                 is_palm_open = False  # Reiniciar el estado de la mano

@@ -9,10 +9,11 @@ def generar_poema(emotion_percentages):
     # Creamos el prompt a partir de las emociones
     prompt = f"Eres una IA poética. Genera un poema que refleje las siguientes emociones: {sorted_emotions[0][0]}({sorted_emotions[0][1]}%), {sorted_emotions[1][0]}({sorted_emotions[1][1]}%), {sorted_emotions[2][0]}({sorted_emotions[2][1]}%). El poema debe ser de 35 palabras."
     
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        temperature=0.5,
-        max_tokens=200
+    response = openai.ChatCompletion.create(
+      model="gpt-4",
+      messages=[
+            {"role": "system", "content": "Eres una IA poética."},
+            {"role": "user", "content": prompt}
+        ]
     )
-    return response.choices[0].text.strip()
+    return response['choices'][0]['message']['content']

@@ -36,3 +36,5 @@ def export_results(video_path, emotion_percentages, poema, audio_path):
     existing_data.append(data)
     with open('results.json', 'w', encoding='utf-8') as f:
         json.dump(existing_data, f, indent=4)
+
+        

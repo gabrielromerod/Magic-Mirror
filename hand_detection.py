@@ -22,8 +22,7 @@ def detect_and_draw_hands(frame, is_palm_open, start_time):
     if results.multi_hand_landmarks:
         open_palms = 0
         for hand_landmarks in results.multi_hand_landmarks:
-            # Aquí es donde interpretamos los puntos de referencia para detectar la palma de la mano
-            # Asumiendo que la palma de la mano está abierta si los demás dedos están doblados
+            # Aquí chequeamos los puntos de referencia para detectar la palma de la mano
             middle_finger_tip = hand_landmarks.landmark[mp.solutions.hands.HandLandmark.MIDDLE_FINGER_TIP]  # type: ignore
             other_fingers_bent = True
             for id, lm in enumerate(hand_landmarks.landmark):

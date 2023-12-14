@@ -1,6 +1,11 @@
 import openai
+import dotenv
 
-openai.api_key = "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"
+# Cargamos las variables de entorno
+dotenv.load_dotenv()
+
+# Cargamos la API key de OpenAI
+openai.api_key = dotenv.get('OPENAI_API_KEY')
 
 def generar_poema(emotion_percentages):
     # Ordenamos las emociones de mayor a menor porcentaje
